@@ -1,0 +1,10 @@
+{% extends 'employee/base.html' %}
+
+{% block content %}
+  <h2>KarteInfo登録フォーム</h2>
+  <form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <input type="submit" value="登録">
+  </form>
+{% endblock %}

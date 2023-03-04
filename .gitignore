@@ -1,0 +1,17 @@
+# .gitignore
+__pycache__/
+*.log
+
+# Ignore database file
+db.sqlite3
+db-volumes/
+
+# Ignore Python bytecode files
+*.pyc
+
+# Ignore static and media files
+/staticfiles
+/media
+
+
+
