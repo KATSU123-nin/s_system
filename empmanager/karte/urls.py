@@ -6,6 +6,6 @@ app_name = 'karte'
 
 urlpatterns = [
     path('',views.KarteInfoListView.as_view(), name='index'),
-    path('create/', views.KarteInfoCreateView.as_view(), name='karteinfo_create'),
+    path('create/', views.KarteInfoCreateView.as_view(), name = 'karteinfo_create'),
 ]
 
