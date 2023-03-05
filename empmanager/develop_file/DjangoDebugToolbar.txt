@@ -1,0 +1,47 @@
+Django Debug Toolbarを導入するには、以下の手順を行います。
+
+まず、Django Debug Toolbarをインストールします。以下のコマンドを実行します。
+
+lua
+Copy code
+pip install django-debug-toolbar
+settings.pyに、debug_toolbarをインストールしたことを示す設定を追加します。
+
+python
+Copy code
+INSTALLED_APPS = [
+    # ...
+    'debug_toolbar',
+    # ...
+]
+
+MIDDLEWARE = [
+    # ...
+    'debug_toolbar.middleware.DebugToolbarMiddleware',
+    # ...
+]
+
+INTERNAL_IPS = [
+    '127.0.0.1',
+]
+INSTALLED_APPSにdebug_toolbarを追加し、MIDDLEWAREにdebug_toolbar.middleware.DebugToolbarMiddlewareを追加します。INTERNAL_IPSには、デバッグツールバーを表示するIPアドレスを設定します。
+
+urls.pyに、Django Debug ToolbarのURLパターンを追加します。
+
+python
+Copy code
+from django.urls import include, path
+from django.conf import settings
+from django.conf.urls.static import static
+import debug_toolbar
+
+urlpatterns = [
+    path('__debug__/', include(debug_toolbar.urls)),
+    # ...
+]
+
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+urlpatternsに、Django Debug ToolbarのURLパターンを追加します。
+
+これで、Django Debug Toolbarを導入することができます。開発用のサーバーを起動し、ブラウザでアクセスすると、Django Debug Toolbarが表示されます。

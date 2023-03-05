@@ -30,6 +30,5 @@ class IndexView(generic.ListView):
       if therapist:
         queryset = queryset.filter(therapist=therapist)
 
-      print("Queryset", queryset)
-
+      # print("Queryset", queryset)
       return queryset

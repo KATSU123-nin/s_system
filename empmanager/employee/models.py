@@ -26,7 +26,7 @@ class Employee(models.Model):
     insurance = models.ForeignKey(Insurance, verbose_name='保険名', on_delete=models.PROTECT, null=True, blank=True)
     therapist = models.ForeignKey(Therapist, verbose_name='セラピスト名', on_delete=models.PROTECT, null=True, blank=True)
     created_at = models.DateTimeField('日付', default=timezone.now)
-    
+
     def __str__(self):
       return '{0} {1}'.format(self.first_name, self.last_name)
 
