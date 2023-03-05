@@ -12,12 +12,15 @@ class KarteInfoListView(ListView):
     model = KarteInfo
     template_name = 'karte/index.html'
     context_object_name = 'karte_info_list'
+    paginate_by = 10
+    form_class = KarteInfoSearchForm
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
 
-
-        print("context['karte_info_list']".upper(), context['karte_info_list'])
+        print('@@@@@@@@@@@@@@@@@@@@')
+        print("context['karte_info_list']#####".upper(),
+              context['karte_info_list'])
         """
         セラピスト情報を追加
 
@@ -27,31 +30,48 @@ class KarteInfoListView(ListView):
         そのため、１つ１つのKarteInfoを取り出して、thrapistの情報を追加している。
         """
         for karteinfo in context['karte_info_list']:
-          # KarteInfoに関連しているEmployeeの情報はドットで繋げることで取得できる！
-          print(karteinfo.patient.therapist)
-          karteinfo.therapist = karteinfo.patient.therapist
+            # KarteInfoに関連しているEmployeeの情報はドットで繋げることで取得できる！
+            # print(karteinfo.patient.therapist)
+            karteinfo.therapist = karteinfo.patient.therapist
 
         # フォーム情報を追加
         context['form'] = KarteInfoSearchForm(self.request.GET)
-        print("CONTEXT:KARTE",context)
+        print('@@@@@@@@@@@@@@@@@@@@')
+        print("CONTEXT:KARTE", context)
         return context
 
     def get_queryset(self):
-      form = KarteInfoSearchForm(self.request.GET)
-      form.is_valid()
+        form = KarteInfoSearchForm(self.request.GET)
+        form.is_valid()
 
-      queryset = super().get_queryset()
-      patient = form.cleaned_data['patient']
-      # print("PPP",form.cleaned_data)
+        print("UUUUUUUUUUSER",self.request.user)
 
-      if patient:
-        queryset = queryset.filter(patient=patient)
+        queryset = super().get_queryset()
+        print('@@@@@@@@@@@@@@@@@@@@')
+        print("form.cleaned_data".upper(), form.cleaned_data)
 
-      # print("GETGETFORM",self.request.GET)
-      # print("QUERYSET:KARTE",super().get_queryset())
-      return queryset
+        patient = form.cleaned_data['patient']
+        if patient:
+            queryset = queryset.filter(patient=patient)
+
+        # querysetの中のpatientの中のtherapistにアクセスするには、patient__therapistとすればOK！
+        therapist = form.cleaned_data['therapist']
+        if therapist:
+            queryset = queryset.filter(patient__therapist=therapist)
+        # print("AAAAA",therapist)
+        print('@@@@@@@@@@@@@@@@@@@@')
+        print("QUERYSET", queryset)
+        # for query in queryset:
+        #     query.therapist = query.patient.therapist
+        #     print("!!!!!!!!!!!!!!!!",query)
+
+        return queryset
+
+
 
 # カルテ情報を追加する
+
+
 class KarteInfoCreateView(CreateView):
     model = KarteInfo
     form_class = KarteInfoForm

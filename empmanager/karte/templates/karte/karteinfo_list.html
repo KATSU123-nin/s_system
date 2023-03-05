@@ -1,6 +1,6 @@
 {% extends "employee/base.html" %} {% block content %}
 <form method="get" action="{% url 'karte:karteinfo_list' %}">
-  {{ form.as_p }}
+  {{ form }}
   <button type="submit">検索</button>
 </form>
 <div class="table-responsive">
