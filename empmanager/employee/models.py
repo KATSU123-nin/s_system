@@ -1,4 +1,5 @@
 from django.db import models
+from django.urls import reverse
 from django.utils import timezone
 
 # Create your models here.
@@ -12,6 +13,9 @@ class Insurance(models.Model):
 class Therapist(models.Model):
   name = models.CharField('セラピスト名', max_length=20)
   created_at = models.DateTimeField('日付', default=timezone.now)
+
+  def get_absolute_url(self):
+    return reverse('therapist_detail', args=[str(self.id)])
 
   def __str__(self):
       return self.name
