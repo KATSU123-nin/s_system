@@ -1,10 +1,12 @@
-{% extends 'employee/base.html' %}
+{% extends 'employee/base.html' %} {% block content %}
 
-{% block content %}
-  <h2>KarteInfo登録フォーム</h2>
-  <form method="post">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <input type="submit" value="登録">
-  </form>
+<p>
+  <a href="{{ request.META.HTTP_REFERER }}"> 前のページへ戻る </a>
+</p>
+
+<h2 class="mb-5">カルテ情報登録フォーム</h2>
+<form method="post">
+  {% csrf_token %} {{ form.as_p }}
+  <input type="submit" value="登録" />
+</form>
 {% endblock %}

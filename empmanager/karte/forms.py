@@ -2,9 +2,23 @@ from django import forms
 from .models import KarteInfo
 
 from django import forms
-from .models import Employee,KarteInfo
+from .models import Employee, KarteInfo
 from employee.models import Therapist
 
+
+class KarteDetailInfoSearchForm(forms.Form):
+    patient_name = forms.CharField(max_length=255, required=False)
+    patient = forms.ModelChoiceField(
+        queryset=Employee.objects.all(), label='患者名', required=False)
+
+
+
+class KarteInfoSearchForm(forms.Form):
+    therapist = forms.ModelChoiceField(
+        queryset=Therapist.objects.all(), label='担当セラピスト', required=False)
+
+    patient = forms.ModelChoiceField(
+        queryset=Employee.objects.all(), label='患者名', required=False)
 
 class KarteInfoSearchForm(forms.Form):
     therapist = forms.ModelChoiceField(
@@ -23,3 +37,11 @@ class KarteInfoForm(forms.ModelForm):
         widgets = {
             'rehaplan': forms.CheckboxSelectMultiple(),
         }
+
+
+class AddPatientForm(forms.ModelForm):
+    reha_at = forms.DateField(widget=forms.DateInput(attrs={'type': 'date'}))
+
+    class Meta:
+        model = Employee
+        fields = ['first_name', 'last_name', 'insurance', 'therapist']

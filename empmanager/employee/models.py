@@ -25,8 +25,6 @@ class Therapist(models.Model):
 class Employee(models.Model):
     first_name = models.CharField('名', max_length=20)
     last_name = models.CharField('姓', max_length=20)
-    name = models.CharField('氏名', max_length=40, blank=True, null=True)
-    email = models.EmailField('メールアドレス', blank=True)
     insurance = models.ForeignKey(Insurance, verbose_name='保険名', on_delete=models.PROTECT, null=True, blank=True)
     therapist = models.ForeignKey(Therapist, verbose_name='セラピスト名', on_delete=models.PROTECT, null=True, blank=True)
     created_at = models.DateTimeField('日付', default=timezone.now)

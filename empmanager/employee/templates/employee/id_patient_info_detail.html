@@ -1,0 +1,81 @@
+{% extends "employee/base.html" %} {% block content %}
+<p>
+  <a href="{{ request.META.HTTP_REFERER }}">
+    前のページへ戻る
+  </a>
+</p>
+{% if id_karteinfo_list.0.patient %}
+<h2 class="karte-list-title mt-3 mb-5">
+  {{ id_karteinfo_list.0.patient }}さんの詳細情報
+</h2>
+
+<table class="table table-bordered mt-2">
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>名前</th>
+      <th>保険</th>
+      <th>担当セラピスト</th>
+
+    </tr>
+  </thead>
+  <tbody>
+    {% for employee in id_employeeinfo_list %}
+    <tr>
+      <td>{{ employee.pk }}</td>
+      <td>{{ employee }}</td>
+      <td>{{ employee.insurance }}</td>
+      <td>{{employee.therapist}}</td>
+
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+
+<hr class="my-5">
+
+
+<!-- カルテ情報を表示するコード -->
+<div class="table-responsive">
+  <table class="table table-bordered mt-2">
+    <thead>
+      <tr>
+        <th class="nowrap">ID</th>
+        <th class="nowrap">患者名</th>
+        <th class="nowrap">リハビリ実施日</th>
+        <th class="nowrap">担当セラピスト</th>
+        <th class="nowrap">痛みの具合</th>
+        <th class="nowrap">可動域制限</th>
+        <th class="nowrap">リハ内容</th>
+        <th class="nowrap comment-area">リハコメント</th>
+        <th class="nowrap">カルテ一覧</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for karte_detail in id_karteinfo_list %}
+      <tr>
+        <td class="nowrap">{{ karte_detail.patient.id }}</td>
+        <td class="nowrap">{{ karte_detail.patient }}</td>
+        <td class="nowrap">{{ karte_detail.reha_at }}</td>
+        <td class="nowrap">{{ karte_detail.patient.therapist }}</td>
+        <td class="nowrap">{{ karte_detail.pain }}</td>
+        <td class="nowrap">{{ karte_detail.range }}</td>
+        <td class="nowrap">
+          {% for plan in karte_detail.rehaplan.all %}
+            {{ plan.name }}{% if not forloop.last %}、{% endif %}
+          {% endfor %}
+        </td>
+        <td class="comment-area">{{ karte_detail.comment }}</td>
+        <td class="nowrap">
+          <a href="{% url 'karte:idpatientkarte_detail' pk=karte_detail.patient.id %}"
+            >⏩</a
+          >
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% else %}
+<h2 class="mt-5">まだカルテの情報がありません。</h2>
+{% endif %} {% endblock content %}

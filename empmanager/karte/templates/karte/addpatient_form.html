@@ -1,0 +1,12 @@
+{% extends 'employee/base.html' %} {% block content %}
+
+<p>
+  <a href="{{ request.META.HTTP_REFERER }}"> 前のページへ戻る </a>
+</p>
+
+<h2 class="mb-5">患者登録フォーム</h2>
+<form method="post">
+  {% csrf_token %} {{ form.as_p }}
+  <input type="submit" value="登録" />
+</form>
+{% endblock %}

@@ -1,29 +1,33 @@
 {% extends "employee/base.html" %}
 {% block content %}
+
+
+<h2 class="mb-4">患者一覧</h2>
+
 <form action="" method='GET'>
   {{form}}
   <button type='submit'>検索</button>
 </form>
-<table class="table table-bordered mt-5">
+<table class="table table-bordered mt-2">
   <thead>
     <tr>
       <th>ID</th>
-      <th>姓</th>
-      <th>名</th>
-      <th>メール</th>
+      <th>名前</th>
       <th>保険</th>
       <th>担当セラピスト</th>
+      <th>カルテ一覧</th>
+      <th>患者詳細</th>
     </tr>
   </thead>
   <tbody>
     {% for employee in employee_list %}
     <tr>
       <td>{{ employee.pk }}</td>
-      <td>{{ employee.first_name }}</td>
-      <td>{{ employee.last_name }}</td>
-      <td>{{ employee.email }}</td>
+      <td>{{ employee }}</td>
       <td>{{ employee.insurance }}</td>
       <td>{{employee.therapist}}</td>
+      <td><a href="{% url 'karte:idpatientkarte_detail' pk=employee.id %}">⏩</a></td>
+      <td><a href="{% url 'employee:idpatientinfo_detail' pk=employee.id %}">⏩</a></td>
     </tr>
     {% endfor %}
   </tbody>

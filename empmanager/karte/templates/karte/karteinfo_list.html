@@ -1,37 +1,62 @@
 {% extends "employee/base.html" %} {% block content %}
+
+<h2 class="karte-list-title mb-5">カルテ一覧</h2>
+
+<div class="thera-detail mb-5">
+  <p class="thera-detail-title mb-0">セラピスト個別ページ</p>
+  <ul class="nav nav-tabs thera-detail-list">
+    {% for thera in therapist_all_list %}
+      <li class="nav-item thera-detail-item">
+        <a
+          href="{% url 'karte:therapistkartelist_detail' pk=thera.id %}"
+          class="nav-link theradetail-link {% if thera.active %}active{% endif %}"
+        >
+          {{thera.name}}
+        </a>
+      </li>
+    {% endfor %}
+  </ul>
+</div>
+
+
 <form method="get" action="{% url 'karte:karteinfo_list' %}">
   {{ form }}
   <button type="submit">検索</button>
 </form>
+
 <div class="table-responsive">
-  <table class="table table-bordered mt-5">
+  <table class="table table-bordered mt-2">
     <thead>
       <tr>
-        <th>ID</th>
-        <th>患者名</th>
-        <th>リハビリ実施日</th>
-        <th>担当セラピスト</th>
-        <th>痛みの具合</th>
-        <th>可動域制限</th>
-        <th>リハ内容</th>
-        <th>リハコメント</th>
+        <th class="nowrap">ID</th>
+        <th class="nowrap">患者名</th>
+        <th class="nowrap">リハビリ実施日</th>
+        <th class="nowrap">担当セラピスト</th>
+        <th class="nowrap">痛みの具合</th>
+        <th class="nowrap">可動域制限</th>
+        <th class="nowrap">リハ内容</th>
+        <th class="nowrap comment-area">リハコメント</th>
+        <th class="nowrap">カルテ一覧</th>
+        <th class="nowrap">患者詳細</th>
       </tr>
     </thead>
     <tbody>
       {% for karte_info in karte_info_list %}
       <tr>
-        <td>{{ karte_info.patient.id }}</td>
-        <td>{{ karte_info.patient }}</td>
-        <td>{{ karte_info.reha_at }}</td>
-        <td>{{ karte_info.therapist.name }}</td>
-        <td>{{ karte_info.pain }}</td>
-        <td>{{ karte_info.range }}</td>
-        <td>
+        <td class="nowrap">{{ karte_info.patient.id }}</td>
+        <td class="nowrap">{{ karte_info.patient }}</td>
+        <td class="nowrap">{{ karte_info.reha_at }}</td>
+        <td class="nowrap">{{ karte_info.therapist.name }}</td>
+        <td class="nowrap">{{ karte_info.pain }}</td>
+        <td class="nowrap">{{ karte_info.range }}</td>
+        <td class="nowrap">
           {% for plan in karte_info.rehaplan.all %}
             {{ plan.name }}
           {% endfor %}
         </td>
-        <td>{{ karte_info.comment }}</td>
+        <td class="comment-area">{{ karte_info.comment }}</td>
+        <td class="nowrap"><a href="{% url 'karte:idpatientkarte_detail' pk=karte_info.patient.id %}">⏩</a></td>
+        <td class="nowrap"><a href="{% url 'employee:idpatientinfo_detail' pk=karte_info.patient.id %}">⏩</a></td>
       </tr>
       {% endfor %}
     </tbody>

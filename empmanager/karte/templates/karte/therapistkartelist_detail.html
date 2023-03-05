@@ -1,0 +1,68 @@
+{% extends 'employee/base.html' %} {% block content %}
+<h2 class="">{{ object }}さん担当：カルテ一覧</h2>
+
+<hr class="mt-5 mb-2" />
+
+<form action="" method='GET'>
+  {{form}}
+  <button type='submit'>検索</button>
+</form>
+
+<div class="thera-detail mb-2">
+  <ul class="nav nav-tabs thera-detail-list">
+    <li class="nav-item thera-detail-item">
+      <a
+        href="{% url 'karte:karteinfo_list' %}"
+        class="nav-link theradetail-link {% if thera.active %}active{% endif %}"
+      >
+        カルテ一覧
+      </a>
+    </li>
+    {% for thera in therapist_all_list %}
+    <li class="nav-item thera-detail-item">
+      <a
+        href="{% url 'karte:therapistkartelist_detail' pk=thera.id %}"
+        class="nav-link theradetail-link {% if thera.active %}active{% endif %}"
+      >
+        {{thera.name}}
+      </a>
+    </li>
+    {% endfor %}
+  </ul>
+</div>
+
+{% if karte_detail_info_list %}
+<div class="table-responsive">
+  <table class="table table-bordered">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>患者名</th>
+        <th>リハビリ実施日</th>
+        <th>痛みの具合</th>
+        <th>可動域制限</th>
+        <th>リハ内容</th>
+        <th>リハコメント</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for karte_info in karte_detail_info_list %}
+      <tr>
+        <td>{{ karte_info.patient.id }}</td>
+        <td>{{ karte_info.patient }}</td>
+        <td>{{ karte_info.reha_at }}</td>
+        <td>{{ karte_info.pain }}</td>
+        <td>{{ karte_info.range }}</td>
+        <td>
+          {% for plan in karte_info.rehaplan.all %} {{ plan.name }} {% endfor %}
+        </td>
+        <td>{{ karte_info.comment }}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+
+{% else %}
+<h2>まだカルテの情報がありません。</h2>
+{% endif %} {% endblock content %}
