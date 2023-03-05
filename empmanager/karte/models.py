@@ -40,11 +40,13 @@ class Comment(models.Model):
 class KarteInfo(models.Model):
     patient = models.ForeignKey(
         Employee, on_delete=models.CASCADE, verbose_name='患者名')
-    therapist = models.ForeignKey(Employee, 
+
+    therapist = models.ForeignKey(Employee,
         on_delete=models.deletion.CASCADE,
         related_name="related_therapist",
         verbose_name="担当セラピスト",
-    ),
+    )
+    
     reha_at = models.DateField('リハビリ実施日', default=timezone.now)
     pain = models.ForeignKey(
         Pain,  on_delete=models.CASCADE, verbose_name='痛みの具合', blank=True)
