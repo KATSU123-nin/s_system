@@ -34,6 +34,7 @@ ALLOWED_HOSTS = []
 INSTALLED_APPS = [
     'sass_processor',
     'django_extensions',
+    'patient.apps.PatientConfig',
     "employee.apps.EmployeeConfig",
     "karte.apps.KarteConfig",
     "debug_toolbar",

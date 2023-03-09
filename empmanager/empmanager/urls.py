@@ -23,7 +23,8 @@ urlpatterns = [
     path('__debug__/', include(debug_toolbar.urls)),
     path('admin/', admin.site.urls),
     path('', include('employee.urls')),
-    path('karte/', include('karte.urls'))
+    path('karte/', include('karte.urls')),
+    path('patient/', include('patient.urls')),
 ]
 
 if settings.DEBUG:

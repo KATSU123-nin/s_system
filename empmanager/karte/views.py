@@ -5,7 +5,7 @@ from django.urls import reverse_lazy
 
 from employee.models import Therapist
 from .models import KarteInfo
-from .forms import KarteInfoForm, KarteInfoSearchForm, AddPatientForm, KarteDetailInfoSearchForm
+from .forms import KarteInfoForm, KarteInfoSearchForm, AddPatientForm
 from employee.models import Employee
 
 from django.views.generic import DetailView
@@ -13,7 +13,7 @@ from django.views.generic import DetailView
 
 class KarteInfoListView(ListView):
     model = KarteInfo
-    template_name = 'karte/kateinfo_list.html'
+    template_name = 'karte/karteinfo_list.html'
     context_object_name = 'karte_info_list'
     paginate_by = 30
     form_class = KarteInfoSearchForm
@@ -71,7 +71,7 @@ class TherapistKarteListDetailView(DetailView):
     model = Therapist
     template_name = 'karte/therapistkartelist_detail.html'
     context_object_name = 'karte_detail_info_list'
-    form_class = KarteDetailInfoSearchForm
+    # form_class = KarteDetailInfoSearchForm
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
