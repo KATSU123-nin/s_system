@@ -1,0 +1,63 @@
+{% extends "employee/base.html" %} {% block content %}
+
+<h2 class="karte-list-title mb-5">カルテ一覧</h2>
+
+<div class="thera-detail mb-5">
+  <p class="thera-detail-title mb-0">セラピスト個別ページ</p>
+  <ul class="nav nav-tabs thera-detail-list">
+    {% for thera in therapist_all_list %}
+    <li class="nav-item thera-detail-item">
+      <a
+        href="{% url 'karte:therapistkartelist_detail' pk=thera.id %}"
+        class="nav-link theradetail-link {% if thera.active %}active{% endif %}"
+      >
+        {{thera.name}}
+      </a>
+    </li>
+    {% endfor %}
+  </ul>
+</div>
+
+<div class="table-responsive">
+  <table class="table table-bordered mt-2">
+    <thead>
+      <tr>
+        <th class="nowrap">ID</th>
+        <th class="nowrap">患者名</th>
+        <th class="nowrap">担当セラピスト</th>
+        <th class="nowrap">保健名</th>
+        <th class="nowrap">疾患名</th>
+        <th class="nowrap">発症日</th>
+        <th class="nowrap">リハ開始日</th>
+        <th class="nowrap">カルテID</th>
+        <th class="nowrap">生年月日</th>
+        <th class="nowrap">性別</th>
+        <th class="nowrap">短期ゴール</th>
+        <th class="nowrap">長期ゴール</th>
+        <th class="nowrap">治療方針</th>
+        <th class="nowrap">治療内容</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for patient_info in patient_info_list %}
+      <tr>
+        <td class="nowrap">{{ patient_info.id }}</td>
+        <td class="nowrap">{{ patient_info.name }}</td>
+        <td class="nowrap">{{ patient_info.therapist_name }}</td>
+        <td class="nowrap">{{ patient_info.insurance }}</td>
+        <td class="nowrap">{{ patient_info.disease }}</td>
+        <td class="nowrap">{{ patient_info.onset_date }}</td>
+        <td class="comment-area">{{ patient_info.reha_start }}</td>
+        <td class="comment-area">{{ patient_info.karte_id }}</td>
+        <td class="comment-area">{{ patient_info.birth_date }}</td>
+        <td class="comment-area">{{ patient_info.sex }}</td>
+        <td class="comment-area">{{ patient_info.short_term_goal }}</td>
+        <td class="comment-area">{{ patient_info.long_term_goal }}</td>
+        <td class="comment-area">{{ patient_info.treatment_policy }}</td>
+        <td class="comment-area">{{ patient_info.treatment_content }}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endblock content %}

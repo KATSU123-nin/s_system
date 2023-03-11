@@ -1,6 +1,5 @@
-import os
+from ..models import Patient
 import pandas as pd
-
 
 
 EXCEL_DATA = '/Users/katsuto/Documents/IdeaProjects/Learn/Python/s_system/新・総合実施計画書管理フォルダ/総合実施計画書 平データ.xlsm'
@@ -55,10 +54,15 @@ for data in datas:
 print(result_list)
 
 
-
-# print("CCCCCCCCCCcolumns", columns)
-
-# value = df['Unnamed: 2'][6]
-# val2 = df['Unnamed: 2'].iloc[-1]
-# print("VALUE", value)
-# print("VAL2", val2)
+try:
+    # 既存のレコードがあるか検索する
+    existing_patient = Patient.objects.get(name=result_list['名前'], birth_date=result_list['生年月日'])
+except Patient.DoesNotExist:
+    # 既存のレコードがない場合、新しいオブジェクトを作成
+    print('データがないので追加しといたよ！')
+    # patient = Patient(**result_list)
+    # patient.save()
+else:
+    # 既存のレコードがある場合、何もしない
+    print('データがあったから、データを追加しなかったよ！')
+    pass
